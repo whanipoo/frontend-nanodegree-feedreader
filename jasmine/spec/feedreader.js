@@ -82,23 +82,51 @@ $(function() {
 
 
     /* The "Initial Entries" test suite */
+
     describe('Initial Entries', function() {
+      /* A test that ensures when the loadFeed
+       * function is called and completes its work, there is at least
+       * a single .entry element within the .feed container.
+       */
 
-        /* A test that ensures when the loadFeed
-         * function is called and completes its work, there is at least
-         * a single .entry element within the .feed container.
-         * Remember, loadFeed() is asynchronous so this test will require
-         * the use of Jasmine's beforeEach and asynchronous done() function.
-         */
+       //Making sure that the loadFeed function is completed at least once before running the test
+      beforeEach(function(done) {
+        loadFeed(0,done);
+        });
 
-
+        //Checking to see if there is at least one entry in the feed
+      it('There is at least one entry when the loadFeed function is completed',function(){
+        expect($('.feed .entry').length).toBeGreaterThan(0);
+      });
 
     });
 
-    /* TODO: Write a new test suite named "New Feed Selection" */
-
-        /* TODO: Write a test that ensures when a new feed is loaded
+    /* The "New Feed Selection" test suite */
+    describe('New Feed Selection', function() {
+      var firstFeed,
+          secondFeed;
+        /* A test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
          */
+
+         //Making sure 2 feeds are loaded before we test
+         beforeEach(function(done){
+           loadFeed(0, function(){
+             firstFeed =$('.feed').html();
+             done();
+           });
+           loadFeed(1, function(){
+             secondFeed =$('.feed').html();
+             done();
+           });
+         });
+
+         //Checking to see if the the old feed and the new feed are the same (if the feed changes, they shouldn't be)
+         it('When a new feed is loaded, the content changes',function(){
+           expect(firstFeed===secondFeed).toBe(false);
+         });
+
+
+       });
+
 }());
