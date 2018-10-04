@@ -92,7 +92,7 @@ $(function() {
        //Making sure that the loadFeed function is completed at least once before running the test
       beforeEach(function(done) {
         loadFeed(0,done);
-        });
+      });
 
         //Checking to see if there is at least one entry in the feed
       it('There is at least one entry when the loadFeed function is completed',function(){
@@ -113,11 +113,10 @@ $(function() {
          beforeEach(function(done){
            loadFeed(0, function(){
              firstFeed =$('.feed').html();
-             done();
-           });
-           loadFeed(1, function(){
-             secondFeed =$('.feed').html();
-             done();
+             loadFeed(1, function(){
+               secondFeed =$('.feed').html();
+               done();
+             });
            });
          });
 
